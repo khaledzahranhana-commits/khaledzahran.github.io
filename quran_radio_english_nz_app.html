@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Quran Radio & Library</title>
+<meta name="theme-color" content="#0b3b2e" />
+<style>
+:root{
+  --bg:#071f19; --deep:#0a3025; --card:#103d30; --card2:#164b3a; --gold:#e7c15b; --gold2:#f7dc83;
+  --text:#fffaf0; --muted:#c8d8cf; --line:rgba(255,255,255,.14); --danger:#ff5d5d;
+  --shadow:0 20px 55px rgba(0,0,0,.30); --radius:24px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;background:radial-gradient(circle at top left,#174d39 0,#071f19 42%,#04120f 100%);color:var(--text)}
+body:before{content:"";position:fixed;inset:0;background:linear-gradient(135deg,rgba(231,193,91,.08),transparent 35%),radial-gradient(circle at 85% 12%,rgba(39,185,154,.2),transparent 22%);pointer-events:none}
+.app{width:min(980px,100%);margin:0 auto;padding:18px 16px 70px;position:relative}
+.hero{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:30px;background:linear-gradient(135deg,rgba(15,61,47,.96),rgba(7,31,25,.92));box-shadow:var(--shadow);padding:28px;min-height:220px;display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:center}
+.hero:before,.hero:after{content:"";position:absolute;border-radius:50%;opacity:.72}.hero:before{width:190px;height:190px;background:var(--gold);right:68px;top:-48px}.hero:after{width:250px;height:250px;background:#2db99a;right:-72px;bottom:-92px}.brand{position:relative;z-index:2}.kz{width:48px;height:48px;border-radius:50%;background:#fffaf0;color:#09231b;display:grid;place-items:center;font-weight:900;margin-bottom:18px;box-shadow:0 0 0 6px rgba(255,255,255,.1)}
+h1{font-size:clamp(34px,7vw,64px);line-height:.96;margin:0 0 14px;letter-spacing:-.05em}.hero p{margin:0;color:var(--muted);font-size:clamp(15px,2vw,18px);line-height:1.55;max-width:620px}.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(231,193,91,.12);border:1px solid rgba(231,193,91,.38);color:var(--gold2);border-radius:999px;padding:9px 13px;font-weight:800;font-size:13px;margin-bottom:14px}.badge span{width:9px;height:9px;border-radius:50%;background:#42e6ac;box-shadow:0 0 0 6px rgba(66,230,172,.12)}.hero-side{position:relative;z-index:2;display:grid;place-items:center}.orn{width:220px;height:160px;border-radius:34px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.13);transform:rotate(-8deg);display:grid;place-items:center}.orn div{display:flex;gap:16px;align-items:center}.shape{display:block}.s1{width:34px;height:34px;border-radius:10px;background:#d51f2d}.s2{width:42px;height:42px;border-radius:50%;background:#f3c316}.s3{width:0;height:0;border-left:25px solid transparent;border-right:25px solid transparent;border-bottom:46px solid #27b99a}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}.panel{background:rgba(16,61,48,.84);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}.panel.full{grid-column:1/-1}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}.panel h2{margin:0;font-size:25px;letter-spacing:-.02em}.status{display:flex;align-items:center;gap:8px;color:var(--muted);font-weight:700}.dot{width:12px;height:12px;border-radius:50%;background:var(--danger);box-shadow:0 0 0 6px rgba(255,93,93,.12)}.dot.on{background:#40e39f;box-shadow:0 0 0 6px rgba(64,227,159,.12)}
+.now{background:rgba(255,255,255,.07);border:1px solid var(--line);border-radius:20px;padding:20px;margin:14px 0}.now .title{font-size:24px;font-weight:900;margin-bottom:6px}.now .sub{color:var(--muted);font-weight:700}audio{width:100%;margin:10px 0 12px;filter:sepia(20%) saturate(70%) hue-rotate(90deg)}.buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px}.buttons.three{grid-template-columns:1fr 1fr 1fr}button{border:0;border-radius:17px;padding:15px 14px;font-weight:900;font-size:16px;cursor:pointer;color:#09231b;background:linear-gradient(135deg,var(--gold),var(--gold2));box-shadow:0 10px 26px rgba(0,0,0,.16)}button.secondary{background:rgba(255,255,255,.08);color:var(--text);border:1px solid var(--line)}button.danger{background:rgba(255,93,93,.12);color:#ffd1d1;border:1px solid rgba(255,93,93,.35)}button:active{transform:translateY(1px)}
+.message{margin-top:12px;border:1px solid rgba(231,193,91,.28);background:rgba(231,193,91,.08);border-radius:16px;padding:13px 14px;color:#f2e1aa;line-height:1.45}.field{margin-bottom:14px}label{display:block;margin:0 0 7px;color:var(--gold2);font-weight:900;font-size:13px}select,input{width:100%;border:1px solid var(--line);background:rgba(255,255,255,.08);color:var(--text);border-radius:15px;padding:14px;font-size:15px;outline:none}option{color:#111;background:#fff}input::placeholder{color:#a8bab1}.surah-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-height:520px;overflow:auto;padding-right:3px}.surah{display:flex;align-items:center;gap:12px;text-align:left;background:rgba(255,255,255,.07);border:1px solid var(--line);border-radius:18px;padding:14px;color:var(--text);box-shadow:none}.num{min-width:38px;height:38px;border-radius:12px;background:rgba(231,193,91,.2);color:var(--gold2);display:grid;place-items:center;font-weight:900}.surah strong{display:block}.surah small{display:block;color:var(--muted);margin-top:2px}.footer-note{margin-top:16px;color:var(--muted);font-size:13px;line-height:1.5;text-align:center}.hidden{display:none!important}
+@media(max-width:760px){.app{padding:12px 10px 60px}.hero{grid-template-columns:1fr;padding:22px;border-radius:24px;min-height:auto}.hero-side{display:none}.grid{grid-template-columns:1fr}.surah-list{grid-template-columns:1fr;max-height:560px}.buttons,.buttons.three{grid-template-columns:1fr}.panel{padding:17px}h1{font-size:42px}.hero p{font-size:15px}.now .title{font-size:22px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <section class="hero">
+    <div class="brand">
+      <div class="kz">KZ</div>
+      <div class="badge"><span></span> Live Quran Radio + Full Library</div>
+      <h1>Quran Radio</h1>
+      <p>Simple English Quran audio app for New Zealand use. Play live radio, choose a reciter, search any Surah, and listen from your phone.</p>
+    </div>
+    <div class="hero-side"><div class="orn"><div><i class="shape s1"></i><i class="shape s2"></i><i class="shape s3"></i></div></div></div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="panel-head"><h2>Live Player</h2><div class="status"><span id="liveDot" class="dot"></span><span id="liveStatus">Ready</span></div></div>
+      <div class="field">
+        <label for="radioSelect">Radio Source</label>
+        <select id="radioSelect"></select>
+      </div>
+      <div class="now">
+        <div class="title" id="currentTitle">Select a source</div>
+        <div class="sub" id="currentSub">Press Play Radio once</div>
+      </div>
+      <audio id="audio" controls playsinline preload="none"></audio>
+      <div class="buttons three">
+        <button id="playRadio">Play Radio</button>
+        <button id="nextRadio" class="secondary">Try Next</button>
+        <button id="stopAudio" class="danger">Stop</button>
+      </div>
+      <div class="message" id="playerMsg">For best results, open this from the GitHub Pages link, not from Downloads or edge://external-file.</div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><h2>Library Setup</h2></div>
+      <div class="field">
+        <label for="reciterSelect">Reciter</label>
+        <select id="reciterSelect"></select>
+      </div>
+      <div class="field">
+        <label for="searchInput">Search Surah</label>
+        <input id="searchInput" placeholder="Example: Al-Baqarah" />
+      </div>
+      <div class="buttons">
+        <button id="playSelected">Play Selected Surah</button>
+        <button id="clearSearch" class="secondary">Clear Search</button>
+      </div>
+      <div class="message">Background play depends on your phone browser settings. Start playback once, then lock the screen.</div>
+    </div>
+
+    <div class="panel full">
+      <div class="panel-head"><h2>Surah Library</h2><div class="status"><span id="surahCount">114 Surahs</span></div></div>
+      <div id="surahList" class="surah-list"></div>
+      <div class="footer-note">Audio sources are loaded from public Quran audio services. If one source fails, use Try Next or choose a library Surah.</div>
+    </div>
+  </section>
+</div>
+<script>
+const $ = id => document.getElementById(id);
+const audio = $('audio');
+const surahs = [
+'Al-Fatihah','Al-Baqarah','Aal-Imran','An-Nisa','Al-Ma\'idah','Al-An\'am','Al-A\'raf','Al-Anfal','At-Tawbah','Yunus','Hud','Yusuf','Ar-Ra\'d','Ibrahim','Al-Hijr','An-Nahl','Al-Isra','Al-Kahf','Maryam','Ta-Ha','Al-Anbiya','Al-Hajj','Al-Mu\'minun','An-Nur','Al-Furqan','Ash-Shu\'ara','An-Naml','Al-Qasas','Al-Ankabut','Ar-Rum','Luqman','As-Sajdah','Al-Ahzab','Saba','Fatir','Ya-Sin','As-Saffat','Sad','Az-Zumar','Ghafir','Fussilat','Ash-Shura','Az-Zukhruf','Ad-Dukhan','Al-Jathiyah','Al-Ahqaf','Muhammad','Al-Fath','Al-Hujurat','Qaf','Adh-Dhariyat','At-Tur','An-Najm','Al-Qamar','Ar-Rahman','Al-Waqi\'ah','Al-Hadid','Al-Mujadilah','Al-Hashr','Al-Mumtahanah','As-Saff','Al-Jumu\'ah','Al-Munafiqun','At-Taghabun','At-Talaq','At-Tahrim','Al-Mulk','Al-Qalam','Al-Haqqah','Al-Ma\'arij','Nuh','Al-Jinn','Al-Muzzammil','Al-Muddaththir','Al-Qiyamah','Al-Insan','Al-Mursalat','An-Naba','An-Nazi\'at','Abasa','At-Takwir','Al-Infitar','Al-Mutaffifin','Al-Inshiqaq','Al-Buruj','At-Tariq','Al-A\'la','Al-Ghashiyah','Al-Fajr','Al-Balad','Ash-Shams','Al-Layl','Ad-Duha','Ash-Sharh','At-Tin','Al-Alaq','Al-Qadr','Al-Bayyinah','Az-Zalzalah','Al-Adiyat','Al-Qari\'ah','At-Takathur','Al-Asr','Al-Humazah','Al-Fil','Quraysh','Al-Ma\'un','Al-Kawthar','Al-Kafirun','An-Nasr','Al-Masad','Al-Ikhlas','Al-Falaq','An-Nas'];
+const reciters = [
+  {name:'Mishary Rashid Alafasy', base:'https://server8.mp3quran.net/afs/'},
+  {name:'Abdul Basit Abdus Samad', base:'https://server7.mp3quran.net/basit/'},
+  {name:'Mahmoud Khalil Al-Husary', base:'https://server13.mp3quran.net/husr/'},
+  {name:'Saad Al-Ghamdi', base:'https://server7.mp3quran.net/s_gmd/'},
+  {name:'Abdullah Basfar', base:'https://server6.mp3quran.net/bsfr/'},
+  {name:'Yasser Al-Dosari', base:'https://server11.mp3quran.net/yasser/'},
+  {name:'Maher Al-Muaiqly', base:'https://server12.mp3quran.net/maher/'},
+];
+const radios = [
+  {name:'MP3 Quran Radio', url:'https://qurango.net/radio/mix'},
+  {name:'Mishary Alafasy Radio', url:'https://qurango.net/radio/mishary_alafasi'},
+  {name:'Abdul Basit Radio', url:'https://qurango.net/radio/abdulbasit_abdulsamad'},
+  {name:'Al-Husary Radio', url:'https://qurango.net/radio/mahmoud_khalil_alhussary'},
+  {name:'Saad Al-Ghamdi Radio', url:'https://qurango.net/radio/saad_alghamdi'},
+  {name:'Quran Radio Alternative', url:'https://server12.mp3quran.net/maher/001.mp3'}
+];
+let selectedSurah = 1;
+function pad(n){return String(n).padStart(3,'0')}
+function setStatus(text,on=false){$('liveStatus').textContent=text;$('liveDot').classList.toggle('on',on)}
+function msg(t){$('playerMsg').textContent=t}
+function init(){
+  radios.forEach((r,i)=>$('radioSelect').add(new Option(r.name,i)));
+  reciters.forEach((r,i)=>$('reciterSelect').add(new Option(r.name,i)));
+  renderSurahs(); updateCurrent('Select a source','Press Play Radio once');
+  $('playRadio').onclick = playRadio;
+  $('nextRadio').onclick = nextRadio;
+  $('stopAudio').onclick = stop;
+  $('playSelected').onclick = () => playSurah(selectedSurah);
+  $('clearSearch').onclick = () => {$('searchInput').value=''; renderSurahs();};
+  $('searchInput').addEventListener('input',renderSurahs);
+  $('radioSelect').addEventListener('change',()=>{const r=radios[+$('radioSelect').value];updateCurrent(r.name,'Live radio source selected');});
+  audio.addEventListener('playing',()=>setStatus('Playing',true));
+  audio.addEventListener('pause',()=>setStatus('Paused',false));
+  audio.addEventListener('error',()=>{setStatus('Source error',false); msg('This source did not respond. Press Try Next, or choose a Surah from the library.');});
+}
+function updateCurrent(t,s){$('currentTitle').textContent=t;$('currentSub').textContent=s}
+async function safePlay(){try{await audio.play(); msg('Playing. You can lock the phone screen after playback starts.');}catch(e){msg('Playback was blocked by the browser. Press Play again from the GitHub Pages link.');}}
+function playRadio(){const r=radios[+$('radioSelect').value]; audio.src=r.url; audio.load(); updateCurrent(r.name,'Live Quran Radio'); setStatus('Loading',false); safePlay();}
+function nextRadio(){let i=+$('radioSelect').value; i=(i+1)%radios.length; $('radioSelect').value=i; playRadio();}
+function stop(){audio.pause(); audio.removeAttribute('src'); audio.load(); setStatus('Stopped',false); msg('Stopped.');}
+function surahUrl(num){const rec=reciters[+$('reciterSelect').value]; return rec.base + pad(num) + '.mp3';}
+function playSurah(num){selectedSurah=num; const rec=reciters[+$('reciterSelect').value]; audio.src=surahUrl(num); audio.load(); updateCurrent(surahs[num-1],rec.name); setStatus('Loading',false); safePlay(); highlightSelected();}
+function renderSurahs(){const q=$('searchInput').value.toLowerCase().trim(); const list=$('surahList'); list.innerHTML=''; let count=0; surahs.forEach((name,idx)=>{const n=idx+1; if(q && !(name.toLowerCase().includes(q)||String(n)===q)) return; count++; const b=document.createElement('button'); b.className='surah'; b.dataset.num=n; b.innerHTML=`<span class="num">${n}</span><span><strong>${name}</strong><small>Play full Surah</small></span>`; b.onclick=()=>playSurah(n); list.appendChild(b);}); $('surahCount').textContent=count + (count===1?' Surah':' Surahs'); highlightSelected();}
+function highlightSelected(){document.querySelectorAll('.surah').forEach(b=>{b.style.borderColor=(+b.dataset.num===selectedSurah)?'rgba(231,193,91,.75)':'rgba(255,255,255,.14)';});}
+init();
+</script>
+</body>
+</html>
